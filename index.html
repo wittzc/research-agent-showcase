@@ -1,0 +1,516 @@
+<title>调研员</title>
+
+<style>
+:root {
+  --paper: #F4F6F3;
+  --panel: #FFFFFF;
+  --ink: #17201B;
+  --graphite: #5C6862;
+  --faint: #8A958F;
+  --rule: #D8DED8;
+  --rule-soft: #E7EBE6;
+  --seal: #1B5C48;
+  --seal-soft: #E4EEE9;
+  --gap: #9C4426;
+  --gap-soft: #F6E9E3;
+  --shadow: 0 1px 2px rgba(23,32,27,.05), 0 8px 24px rgba(23,32,27,.05);
+
+  --serif: Georgia, "Iowan Old Style", "Times New Roman", "Songti SC", "SimSun", serif;
+  --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  --cjk: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --body: var(--serif), var(--cjk);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #101512;
+    --panel: #171E1A;
+    --ink: #E7EDE8;
+    --graphite: #9BA8A1;
+    --faint: #6E7C75;
+    --rule: #2A342E;
+    --rule-soft: #212A25;
+    --seal: #6FBFA0;
+    --seal-soft: #172C24;
+    --gap: #D98D6C;
+    --gap-soft: #2C1E17;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #101512;
+  --panel: #171E1A;
+  --ink: #E7EDE8;
+  --graphite: #9BA8A1;
+  --faint: #6E7C75;
+  --rule: #2A342E;
+  --rule-soft: #212A25;
+  --seal: #6FBFA0;
+  --seal-soft: #172C24;
+  --gap: #D98D6C;
+  --gap-soft: #2C1E17;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 17px;
+  line-height: 1.72;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+.col { max-width: 660px; }
+
+section { padding: 72px 0; border-top: 1px solid var(--rule-soft); }
+section:first-of-type { border-top: none; }
+
+h1, h2, h3 { text-wrap: balance; margin: 0; font-weight: 500; }
+h1 { font-size: clamp(38px, 6vw, 62px); line-height: 1.08; letter-spacing: -.02em; }
+h2 { font-size: clamp(25px, 3.4vw, 33px); line-height: 1.24; letter-spacing: -.01em; }
+h3 { font-size: 19px; line-height: 1.4; }
+p { margin: 0; }
+
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--faint);
+  font-weight: 500;
+}
+
+.lede { font-size: 20px; color: var(--graphite); line-height: 1.66; }
+.stack > * + * { margin-top: 18px; }
+.stack-lg > * + * { margin-top: 40px; }
+
+.mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+/* evidence apparatus */
+.anchor {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--seal);
+  background: var(--seal-soft);
+  padding: 1px 5px;
+  border-radius: 3px;
+  vertical-align: 2px;
+  white-space: nowrap;
+}
+.grade {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .04em;
+  padding: 2px 7px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+.grade.solid { color: var(--seal); background: var(--seal-soft); }
+.grade.hollow { color: var(--gap); background: transparent; border: 1px dashed var(--gap); }
+
+/* hero */
+.hero { padding: 96px 0 64px; }
+.hero h1 { margin-bottom: 22px; }
+.hero .lede { max-width: 620px; }
+
+.figures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  margin-top: 52px;
+}
+.fig { background: var(--paper); padding: 20px 22px; }
+.fig .n {
+  font-family: var(--mono);
+  font-size: 27px;
+  font-weight: 500;
+  letter-spacing: -.02em;
+  font-variant-numeric: tabular-nums;
+  display: block;
+}
+.fig .k { font-size: 13.5px; color: var(--faint); margin-top: 4px; }
+
+/* replay */
+.replay {
+  background: var(--panel);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  max-width: 760px;
+}
+.replay-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--rule-soft);
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--faint);
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--seal); flex: none; }
+.replay-log { padding: 8px 18px 18px; min-height: 340px; }
+
+.turn { padding: 14px 0; border-bottom: 1px dashed var(--rule-soft); animation: rise .34s ease both; }
+.turn:last-child { border-bottom: none; }
+@keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .turn { animation: none; } }
+
+.turn .who {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--faint);
+  display: block;
+  margin-bottom: 6px;
+}
+.turn.user .who { color: var(--seal); }
+.turn .body { font-size: 15.5px; line-height: 1.66; }
+.turn .body code { font-family: var(--mono); font-size: 13px; background: var(--rule-soft); padding: 1px 5px; border-radius: 3px; }
+.turn .tools { font-family: var(--mono); font-size: 12.5px; color: var(--graphite); line-height: 1.9; }
+.turn .tools i { font-style: normal; color: var(--faint); }
+
+.replay-foot {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  border-top: 1px solid var(--rule-soft);
+  flex-wrap: wrap;
+}
+button {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--paper);
+  background: var(--seal);
+  border: none;
+  padding: 9px 18px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: opacity .18s;
+}
+button:hover { opacity: .86; }
+button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+button[disabled] { opacity: .4; cursor: default; }
+button.ghost { background: transparent; color: var(--graphite); border: 1px solid var(--rule); }
+.progress { font-family: var(--mono); font-size: 12px; color: var(--faint); margin-left: auto; }
+
+/* generic blocks */
+.two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+}
+@media (max-width: 720px) { .two { grid-template-columns: 1fr; } }
+.two > div { background: var(--paper); padding: 26px 24px; }
+.two ul { margin: 14px 0 0; padding-left: 18px; }
+.two li { margin-bottom: 9px; font-size: 15.5px; line-height: 1.6; }
+.two li::marker { color: var(--faint); }
+
+.phases { display: grid; gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
+.phase { background: var(--paper); padding: 20px 24px; display: grid; grid-template-columns: 46px 1fr; gap: 20px; align-items: start; }
+.phase .num { font-family: var(--mono); font-size: 12px; color: var(--faint); padding-top: 5px; letter-spacing: .06em; }
+.phase h3 { margin-bottom: 5px; }
+.phase p { font-size: 15px; color: var(--graphite); line-height: 1.62; }
+.phase.gate { background: var(--seal-soft); }
+.phase.gate .num { color: var(--seal); }
+
+table { width: 100%; border-collapse: collapse; font-size: 15px; }
+th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--rule-soft); vertical-align: top; }
+th { font-family: var(--mono); font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); font-weight: 500; }
+.scroll { overflow-x: auto; }
+
+.sample {
+  background: var(--panel);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 24px 26px;
+  font-size: 15.5px;
+  line-height: 1.74;
+}
+.notes { display: grid; gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin-top: 22px; }
+.note { background: var(--paper); padding: 16px 20px; display: grid; grid-template-columns: 118px 1fr; gap: 18px; font-size: 14.5px; }
+.note .t { font-family: var(--mono); font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--seal); padding-top: 3px; }
+.note .d { color: var(--graphite); line-height: 1.6; }
+@media (max-width: 620px) { .note { grid-template-columns: 1fr; gap: 4px; } }
+
+footer { padding: 56px 0 80px; border-top: 1px solid var(--rule-soft); color: var(--faint); font-size: 14px; }
+</style>
+
+<div class="wrap">
+
+<header class="hero">
+  <p class="eyebrow">竞品与市场调研 · AI Agent</p>
+  <h1>每一个数字<br>都能查到出处</h1>
+  <p class="lede">给它一个网址，它判断该做哪种调研，做完交一份报告：结论标证据等级，数字标口径，取不到的写进缺口。它交材料，不交判断。</p>
+
+  <div class="figures">
+    <div class="fig"><span class="n">21<span style="font-size:15px"> 分钟</span></span><span class="k">一份单站拆解，人工约 3 小时</span></div>
+    <div class="fig"><span class="n">4</span><span class="k">类调研，按输入自动判型</span></div>
+    <div class="fig"><span class="n">6</span><span class="k">处必须停下来找人</span></div>
+    <div class="fig"><span class="n">9</span><span class="k">条来源锚点，每个数字可溯</span></div>
+  </div>
+</header>
+
+<section>
+  <div class="col stack" style="margin-bottom:34px">
+    <p class="eyebrow">实况回放</p>
+    <h2>看它跑一次</h2>
+    <p style="color:var(--graphite)">下面是 2026 年 8 月 23 日一次真实运行的轨迹，逐条录下来的。点「下一步」往前走。<strong>这是回放，页面不连接任何后端</strong>，也调用不了原作者的任何账号。</p>
+  </div>
+
+  <div class="replay">
+    <div class="replay-bar"><span class="dot"></span><span>调研员 · 会话回放 · 2026-08-23 23:29</span></div>
+    <div class="replay-log" id="log"></div>
+    <div class="replay-foot">
+      <button id="next">下一步</button>
+      <button id="reset" class="ghost">重放</button>
+      <span class="progress" id="prog"></span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="col stack" style="margin-bottom:30px">
+    <p class="eyebrow">能力边界</p>
+    <h2>它做什么，不做什么</h2>
+    <p style="color:var(--graphite)">右边这栏是刻意设计的，不是能力不足。调研的价值在于把事实摆清楚，判断留给要为结果负责的人。</p>
+    <p style="color:var(--faint); font-size:15px"><strong>以下是岗位规则，不等于每条都已在实跑中验证过。</strong>哪几条首跑没做到，写在本页最后一节。</p>
+  </div>
+
+  <div class="two">
+    <div>
+      <h3>它做</h3>
+      <ul>
+        <li>判断该做哪一类调研，判不准就停下来问</li>
+        <li>优先采信官网、官方定价页、官方文档、当事人原文</li>
+        <li>每条结论标证据等级，区分实测、平台估算与推算</li>
+        <li>每个流量与占比数字写全口径：时间窗、地域、设备、渠道</li>
+        <li>取不到的数据写进缺口清单，注明试过哪些路径</li>
+        <li>把报告归档、建索引、回写任务状态</li>
+      </ul>
+    </div>
+    <div>
+      <h3>它不做</h3>
+      <ul>
+        <li>不说「这个能抄」「这个值得做」，判断归使用者</li>
+        <li>不用常识或二手转述补上取不到的一手事实</li>
+        <li>数据源受阻时不降级硬跑，停下报告</li>
+        <li>不自行开通付费数据源，额度不够就停</li>
+        <li>不替人登录，验证码与二次验证一律人工</li>
+        <li>不定时自动重跑旧报告</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="col stack" style="margin-bottom:30px">
+    <p class="eyebrow">判型</p>
+    <h2>同一个网址，四种问法</h2>
+    <p style="color:var(--graphite)">一个网址只说明「看谁」，没说明「问什么」。判错了会交出一份完全用不上的报告，所以判型是第一道岗。</p>
+  </div>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>类型</th><th>回答什么</th><th>调研对象</th></tr></thead>
+      <tbody>
+        <tr><td>SEO 机会诊断</td><td>这个站靠什么拿流量，机会成不成立</td><td>竞品</td></tr>
+        <tr><td>SEO 选词选页</td><td>接下来做哪些词、哪些页</td><td>自己的站</td></tr>
+        <tr><td>品类格局</td><td>这个品类有谁，怎么定价，格局怎么变</td><td>一个品类</td></tr>
+        <tr><td>单品成长史</td><td>创始人的判断、增长引擎、用户构成、竞品格局</td><td>单个产品</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="col stack" style="margin-bottom:30px">
+    <p class="eyebrow">流程</p>
+    <h2>五个阶段，中间有闸门</h2>
+    <p style="color:var(--graphite)">绿色那两格是必须停下来找人的位置。设闸门不是因为它做不了，是因为在那两处猜错的代价远高于问一句。</p>
+  </div>
+
+  <div class="phases">
+    <div class="phase"><span class="num">壹</span><div><h3>接单与判型</h3><p>把一句话解析成工单，判定属于哪一类调研。已经指明类型的照办，不二次推翻。</p></div></div>
+    <div class="phase gate"><span class="num">闸</span><div><h3>查重与依赖预检</h3><p>撞上同对象的旧报告就停下来问是更新还是重跑，不按时间自动放行。数据源不可用也停，不降级硬跑。</p></div></div>
+    <div class="phase"><span class="num">贰</span><div><h3>取证</h3><p>调用对应的专业调研流程走完整套，抓官网、定价页、站点结构与流量数据。取不到的当场登记，不留白。</p></div></div>
+    <div class="phase"><span class="num">叁</span><div><h3>成稿与自检</h3><p>逐条结论回查证据链，中间跳步的要么补证据，要么降级成「证据不足」。已采集但没用上的素材要清点一遍。</p></div></div>
+    <div class="phase gate"><span class="num">闸</span><div><h3>发现计划外方向</h3><p>值得深挖的新线索当场补，但补过两轮必须停下来问：继续，还是另立一条待办。</p></div></div>
+    <div class="phase"><span class="num">肆</span><div><h3>归档</h3><p>报告落盘、原始素材随报告存档、更新索引、回写任务状态。四处缺任一处都不算完成。</p></div></div>
+    <div class="phase"><span class="num">伍</span><div><h3>回报速览</h3><p>两百字以内，必须带一行「本次缺口」。批量时这是使用者唯一的筛选界面，不合并成一段总结。</p></div></div>
+  </div>
+</section>
+
+<section>
+  <div class="col stack" style="margin-bottom:30px">
+    <p class="eyebrow">产出标准</p>
+    <h2>一条结论长什么样</h2>
+    <p style="color:var(--graphite)">下面这句原样摘自那份报告。一句话里塞了四样东西，缺任何一样都不算合格。</p>
+  </div>
+
+  <div class="sample col">
+    <span class="grade solid">实测 · 估算</span>
+    SimilarWeb 最近 28 天（截至 2026-08-20、全球、全设备、全渠道）估算总访问量为 <span class="mono">18.8K</span>；直接访问占 <span class="mono">57.98%</span>，自然搜索占 <span class="mono">13.75%</span>，自然社媒占 <span class="mono">16.79%</span>。该结构表明自然搜索是可观测渠道之一，但不是最大渠道；无法据此判断增长机制或新站可排性。<span class="anchor">L01</span>
+  </div>
+
+  <div class="notes col">
+    <div class="note"><span class="t">证据等级</span><span class="d">面板估算和亲手实测分开标。一个估算值被当成硬事实，整条推算的强度就被高估了。</span></div>
+    <div class="note"><span class="t">口径</span><span class="d">时间窗、地域、设备、渠道写全。用单一口径评多口径对象，拿到的是精确的错数字。</span></div>
+    <div class="note"><span class="t">来源锚点</span><span class="d">指向文末的一手来源清单。任何数字被质疑，先查这一行。</span></div>
+    <div class="note"><span class="t">判断边界</span><span class="d">主动写明这个数「不能」推出什么。少了这句，读者会顺手把它当成增长结论。</span></div>
+  </div>
+</section>
+
+<section>
+  <div class="col stack" style="margin-bottom:30px">
+    <p class="eyebrow">缺口</p>
+    <h2>它会告诉你它没查到什么</h2>
+    <p style="color:var(--graphite)">调研最常见的失败不是写错，是写得很完整、看起来什么都覆盖了，而没抓到的部分被悄悄糊过去了。所以「数据缺口」这一节不许空着，没有缺口也要显式写「无」。</p>
+  </div>
+
+  <div class="sample col">
+    <p style="margin-bottom:14px"><span class="grade hollow">缺口 · 摘自同一份报告</span></p>
+    <p style="margin-bottom:10px">用户评价：Trustpilot 触发验证页、G2 触发人机验证，未获得可引用原文。</p>
+    <p style="margin-bottom:10px">广告情报：广告透明度中心仅取得壳页、广告库返回 403，<strong>均不能推断未投放</strong>。</p>
+    <p>发现通道：本次候选发现未使用付费语义搜索，候选集完整性未经交叉验证。</p>
+  </div>
+
+  <p class="col" style="color:var(--graphite); margin-top:22px; font-size:15.5px">注意第二条的后半句。「查不到广告」和「查了这两条路径都没查到」是两种强度，只有后者能写进报告，而且不能顺手写成「它没投广告」。</p>
+</section>
+
+<section>
+  <div class="col stack" style="margin-bottom:30px">
+    <p class="eyebrow">这次跑出了什么</p>
+    <h2>一次运行的实物清单</h2>
+  </div>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>产物</th><th>规格</th><th>作用</th></tr></thead>
+      <tbody>
+        <tr><td>主报告</td><td class="mono">103 行</td><td>结论、证据、缺口、来源清单</td></tr>
+        <tr><td>原始素材</td><td class="mono">18 个文件</td><td>页面快照与结构化证据，供复核与补跑</td></tr>
+        <tr><td>一手来源锚点</td><td class="mono">9 条</td><td>报告里每个数字的回溯入口</td></tr>
+        <tr><td>可回源核对的事实</td><td class="mono">3 / 3 通过</td><td>站点页数、抓取规则、定价，与素材逐条对上</td></tr>
+        <tr><td>无法回源的数字</td><td class="mono">流量类全部</td><td>只存了界面出处，没存原始快照，见下</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="col" style="color:var(--graphite); margin-top:22px; font-size:15.5px">第三行是验收时做的：报告说站点地图有 196 个页面，回到素材里数一遍，也是 196。定价与抓取规则同样核过，<strong>这三类事实没有编造</strong>。</p>
+  <p class="col" style="color:var(--graphite); margin-top:14px; font-size:15.5px">第四行是同一次验收查出来的问题，写在这里而不是藏起来：<strong>报告里那些流量占比来自第三方面板，只标了出处，没有把面板数据存成文件</strong>。也就是说这些数字有来源、但今天已经无法独立复核——面板数据是会变的，当时不存，事后不可再生。这一条已经变成新规则：流量类数据必须随报告存原始快照。</p>
+</section>
+
+<section>
+  <div class="col stack" style="margin-bottom:30px">
+    <p class="eyebrow">诚实记录</p>
+    <h2>首跑没做完的部分</h2>
+    <p style="color:var(--graphite)">这一节放在这里，是因为一个只展示成功的页面本身就不可信。</p>
+  </div>
+  <div class="col stack">
+    <p><strong>三项深度取证没完成</strong>：长周期流量序列与拐点归因、全量着陆页与关键词、广告投放情报。报告里写进了缺口，并因此判定为「未满足完整验收」。</p>
+    <p><strong>缺口只登记了一半</strong>：报告列了六项缺口，但附录的未取证清单只有三行。也就是说另外三项「没做完」是写了，「为什么没做完、试过哪些路径」没写。规则要求两者一一对应，这次没做到。</p>
+    <p><strong>四处归档只完成一处</strong>：主报告落盘了，可分享副本、索引更新、任务状态回写三处都没做。这是它自己判定未通过验收后的处置，方向是对的，但结果就是四处只完成一处。</p>
+    <p><strong>专业流程的两个验收产物根本没生成</strong>：这套调研流程要求交三样东西——证据合同、断言台账、反例清单。首跑只有第一样。缺的那两样里，反例清单是让一个独立角色去推翻结论的，少了它，这份报告的结论没经过任何对抗性检验。</p>
+    <p><strong>流量数字无法独立复核</strong>：见上一节。有出处，但没有原始快照。</p>
+    <p><strong>两道闸门这次根本没被触发</strong>：判型和查重这两处「停下来问人」的设计，因为这次任务已指明类型、报告库里也没有同对象旧报告，一次都没执行到。它们写在规则里，但这次运行没能证明它们会生效。</p>
+    <p><strong>一个设计缺陷已修复</strong>：岗位说明书里规定的固定章节，覆盖掉了专业流程自带的报告骨架，导致「哪些打法能借鉴、哪些学不来」和「我做要花多少资源」两节被挤掉了——而那正是委托调研的全部目的。修法是把结构主导权交还给专业流程，并新增两条机械可查的验收项：那两个缺失的产物文件在不在，那两节在不在。不再靠「写得好不好」这种主观判断去发现问题。</p>
+    <p><strong>还没修的</strong>：被打断后不能断点续跑，重来不会复用已有素材；它会分派子任务，而子任务是否继承主体的行为约束，至今没有验证过。</p>
+  </div>
+  <p class="col" style="color:var(--faint); margin-top:26px; font-size:15px">这一节的内容不是自己写的。页面初稿完成后，交给一个没有参与撰写的独立核查角色，拿页面逐条对账原始报告与规则文档，上面多数条目是它查出来的。<strong>自己给自己判卷，查不出这些。</strong></p>
+</section>
+
+<footer>
+  <div class="col">
+    <p>本页为静态展示，无后端、无接口调用，回放内容为预先录制的真实运行轨迹。页面中不包含任何凭据、密钥或私有路径。</p>
+    <p style="margin-top:12px" class="mono">调研员 · 2026-08</p>
+  </div>
+</footer>
+
+</div>
+
+<script>
+var TURNS = [
+  { who: "使用者", cls: "user", body: "调研 <code>www.selfyz.ai</code>，做 SEO 机会诊断" },
+  { who: "调研员 · 判型", tools: ["读取 岗位工作流卡片", "读取 竞品拆解流程"],
+    body: "已确认调研类型为 <strong>SEO 机会诊断</strong>。先按流程检查历史报告和对应专业能力；如果关键能力不可用，我会在依赖预检处停止，不用二手来源替代。" },
+  { who: "调研员 · 查重", tools: ["检索 报告库"],
+    body: "报告库中没有该对象的历史报告，不触发重复确认，继续。" },
+  { who: "调研员 · 依赖预检", tools: ["检查 搜索通道", "检查 流量数据源登录态", "检查 关键词难度接口"],
+    body: "本次类型所需能力可用。发现通道使用内建搜索而非付费语义搜索，这一点会写进报告的缺口声明。" },
+  { who: "调研员 · 取证", tools: ["抓取 官网首页 / 定价页 / 抓取规则 / 站点地图", "读取 站点结构证据", "带登录态浏览器 · 流量面板", "落盘 原始素材 18 个文件"],
+    body: "站点地图 <span class=\"mono\">196</span> 个页面、<span class=\"mono\">14</span> 种语言，路由模板全部本地化。订阅两档：Pro <span class=\"mono\">$12.99</span>/月、Max <span class=\"mono\">$25.99</span>/月，订阅叠加额度消耗制。" },
+  { who: "调研员 · 取证", tools: ["流量面板 · 渠道 / 设备 / 地域", "流量面板 · 品牌词拆分"],
+    body: "最近 28 天估算总访问 <span class=\"mono\">18.8K</span>，直接访问 <span class=\"mono\">57.98%</span>、自然搜索 <span class=\"mono\">13.75%</span>、自然社媒 <span class=\"mono\">16.79%</span>。自然搜索中品牌词占 <span class=\"mono\">69%</span>。<br><br>移动端占 <span class=\"mono\">79.48%</span>，因此不能用桌面端口径的工具去判断这个站。" },
+  { who: "调研员 · 受阻", tools: ["评价站 · 触发验证页", "评价站 · 触发人机验证", "广告库 · 返回 403"],
+    body: "用户评价与广告情报两条线都没拿到可引用的原文。<strong>这三条会登记进未取证清单，并且不得据此写成「它没有投放广告」。</strong>" },
+  { who: "调研员 · 成稿自检", tools: ["清点 已采集但未进正文的素材", "回查 每条结论的证据链"],
+    body: "所有量化结论只引用有锚点的来源；市场与商业推断中证据不足的部分，全部降级为「无法判断」，没有用缺失数据补全。" },
+  { who: "调研员 · 回报", body: "本地已生成审计版报告与原始素材。<br><br>报告已含：官网定价与额度制、<span class=\"mono\">196</span> 页 / <span class=\"mono\">14</span> 语言站点结构、最近 28 天渠道与设备与地域结构、品牌与非品牌搜索拆分、三个同类产品的官方价格对照。<br><br><strong>未完成项已写入报告</strong>：长周期流量序列与拐点归因、全量着陆页与关键词、广告投放情报。因此尚未满足完整验收，也未导入正式索引。" },
+  { who: "回放结束", cls: "user", body: "以上为 2026-08-23 一次真实运行，耗时约 21 分钟。<strong>它没有把没做完的事说成做完了</strong>，这一条比任何一个数字都重要。<br><br>但它也没把没做完的事说全——事后独立核查又查出四项遗漏。全部写在本页最后一节。" }
+];
+
+var log = document.getElementById("log");
+var btnNext = document.getElementById("next");
+var btnReset = document.getElementById("reset");
+var prog = document.getElementById("prog");
+var idx = 0;
+
+function render(t) {
+  var el = document.createElement("div");
+  el.className = "turn " + (t.cls || "");
+  var html = "<span class=\"who\">" + t.who + "</span>";
+  if (t.tools) {
+    html += "<div class=\"tools\">";
+    for (var i = 0; i < t.tools.length; i++) {
+      html += "<i>&rsaquo;</i> " + t.tools[i] + "<br>";
+    }
+    html += "</div>";
+  }
+  html += "<div class=\"body\">" + t.body + "</div>";
+  el.innerHTML = html;
+  log.appendChild(el);
+  el.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+function step() {
+  if (idx >= TURNS.length) return;
+  render(TURNS[idx]);
+  idx++;
+  update();
+}
+
+function update() {
+  prog.textContent = idx + " / " + TURNS.length;
+  if (idx >= TURNS.length) {
+    btnNext.disabled = true;
+    btnNext.textContent = "已播完";
+  } else {
+    btnNext.disabled = false;
+    btnNext.textContent = idx === 0 ? "开始" : "下一步";
+  }
+}
+
+function reset() {
+  log.innerHTML = "";
+  idx = 0;
+  update();
+  step();
+}
+
+btnNext.addEventListener("click", step);
+btnReset.addEventListener("click", reset);
+reset();
+</script>
+</style>
